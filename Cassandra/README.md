@@ -9,6 +9,7 @@ The following folders contain code samples related to [Apache Cassandra](https:/
 | Project | Description |
 |---------|-------------|
 | [cassandra-vector-demo](./cassandra-vector-demo/) | Local Cassandra 5 ANN retrieval demo (JVector, no LLM) |
+| [cassandra-hybrid-retrieval-demo](./cassandra-hybrid-retrieval-demo/) | Local Cassandra 5 hybrid retrieval demo: SAI keywords, ANN, and filtered ANN on one table |
 
 ## Getting Started
 

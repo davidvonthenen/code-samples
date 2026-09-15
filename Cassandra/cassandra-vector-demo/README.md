@@ -2,7 +2,7 @@
 
 A local **Apache Cassandra 5** demo that stores document embeddings next to the text they describe and retrieves nearest neighbors with **JVector ANN** (`ORDER BY embedding ANN OF`). It is retrieval-only: no keyword lane, no metadata filter, no fusion, and no language model.
 
-This is the precursor sample for the vector-search write-up. The hybrid RAG sample adds SAI keyword grounding and answer generation on the same dataset.
+This is the precursor sample for the vector-search write-up. [cassandra-hybrid-retrieval-demo](../cassandra-hybrid-retrieval-demo/README.md) adds SAI keyword grounding and metadata-filtered ANN on the same dataset.
 
 ## What it demonstrates
 
