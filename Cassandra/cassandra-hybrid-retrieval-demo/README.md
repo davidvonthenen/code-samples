@@ -40,6 +40,8 @@ Question
           └───────────────────▶ WHERE ... ORDER BY ANN OF ?  → filtered neighbors
 ```
 
+
+
 ## Prerequisites
 
 - **Docker / Docker Compose**
@@ -94,6 +96,8 @@ Stop / reset:
 docker compose down          # keep data volume
 docker compose down -v       # wipe Cassandra data
 ```
+
+
 
 ## Try these questions
 
@@ -185,16 +189,15 @@ Run the tests with `python -m unittest discover -s tests`. They cover token extr
 ## What Cassandra is not
 
 - **SAI is not BM25.** Apache Cassandra's SAI text options are limited to
-`normalize`, `case_sensitive`, and `ascii`. Lucene analyzers via
-`index_analyzer`, the `:` term-match operator, and `ORDER BY BM25` are not part
-of open source Apache Cassandra. Treat this lane as exact grounding, not a
-drop-in replacement for a search cluster.
+`normalize`, `case_sensitive`, and `ascii`. Treat this lane as exact grounding, not a drop-in replacement for a search cluster.
 - **Not a graph engine.** Apache Cassandra has no native GraphRAG; citation or
 related-id walks would be application code.
 - **Not a warehouse.** This is top-k retrieval for a prompt, not analytics over a dataset.
 - You still add a search sidecar when you need real BM25 relevance, facets, or
 highlighting. The point is not to delete your search cluster; it is to avoid
 standing one up just to match identifiers next to operational data.
+
+
 
 ## Additional materials
 
