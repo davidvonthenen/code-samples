@@ -1,0 +1,187 @@
+[
+  {
+    "id": "summit-1500-2024-tow",
+    "title": "Tow ratings by configuration, 2024 model year",
+    "category": "towing",
+    "model": "1500",
+    "model_year": 2024,
+    "keywords": ["summit", "1500", "2024", "tow", "towing", "max tow"],
+    "body": "Ratings for the 2024 Summit 1500 vary by driveline. With the 3.5L V6, 3.73 axle, and Max Tow Package, the published maximum is 11,300 lb against a GCWR of 17,000 lb. Lower axle ratios and the base cooling package derate this figure."
+  },
+  {
+    "id": "summit-1500-2023-tow",
+    "title": "Tow ratings by configuration, 2023 model year",
+    "category": "towing",
+    "model": "1500",
+    "model_year": 2023,
+    "keywords": ["summit", "1500", "2023", "tow", "towing", "tow rating"],
+    "body": "The Summit 1500 tows up to 9,100 lb with the towing package, which covers most travel trailers and a two-car open trailer. Figures on this page describe the 2023 model year."
+  },
+  {
+    "id": "summit-2500-2024-tow",
+    "title": "2024 Summit 2500 heavy duty towing capacity",
+    "category": "towing",
+    "model": "2500",
+    "model_year": 2024,
+    "keywords": ["summit", "2500", "2024", "tow", "towing", "heavy duty"],
+    "body": "The 2024 Summit 2500 tows up to 17,600 lb with the gooseneck prep package. Heavy duty ratings are not interchangeable with the 1500; the frame, axle ratio, and cooling package differ."
+  },
+  {
+    "id": "summit-1500-2024-payload",
+    "title": "2024 Summit 1500 payload capacity",
+    "category": "specs",
+    "model": "1500",
+    "model_year": 2024,
+    "keywords": ["summit", "1500", "2024", "payload"],
+    "body": "Maximum payload for the 2024 Summit 1500 is 1,750 lb. Payload counts passengers, cargo, and trailer tongue weight. Payload and towing are separate limits and are often confused."
+  },
+  {
+    "id": "trailer-brake-controller",
+    "title": "When a trailer brake controller is required",
+    "category": "towing",
+    "keywords": ["tow", "towing", "brake controller", "trailer"],
+    "body": "An integrated trailer brake controller is required for trailers over 5,000 lb. Without it you are limited regardless of the truck's published tow rating, and in many states you are out of compliance."
+  },
+  {
+    "id": "hitch-classes",
+    "title": "Hitch receiver classes and weight distribution",
+    "category": "towing",
+    "keywords": ["tow", "towing", "hitch", "receiver"],
+    "body": "A Class III receiver handles up to 6,000 lb; Class IV goes higher. Above 6,000 lb a weight-distributing hitch is recommended. The receiver, not the engine, is often the real limit on an older truck."
+  },
+  {
+    "id": "recall-24v-113",
+    "title": "Recall 24V-113 tailgate latch",
+    "category": "recalls",
+    "model": "1500",
+    "model_year": 2024,
+    "keywords": ["24v-113", "recall", "tailgate", "latch", "2024"],
+    "body": "Recall 24V-113 covers 2024 Summit 1500 trucks. The tailgate latch may release while the tailgate is under load. Dealers will replace the latch assembly at no cost to the owner. Owners can check their VIN to confirm whether a specific truck is affected."
+  },
+  {
+    "id": "recall-23v-088",
+    "title": "Recall 23V-088 backup camera",
+    "category": "recalls",
+    "model": "1500",
+    "model_year": 2023,
+    "keywords": ["23v-088", "recall", "camera", "2023"],
+    "body": "Recall 23V-088 covers 2023 Summit 1500 trucks. The backup camera may display a blank screen when the truck is in reverse. Dealers will update the camera software at no cost to the owner. Owners can check their VIN to confirm whether a specific truck is affected."
+  },
+  {
+    "id": "recall-24v-207",
+    "title": "Recall 24V-207 fuel pump relay",
+    "category": "recalls",
+    "model": "1500",
+    "model_year": 2024,
+    "keywords": ["24v-207", "recall", "fuel pump", "relay", "2024"],
+    "body": "Recall 24V-207 covers 2024 Summit 1500 trucks. The fuel pump relay may fail and cause the engine to stall. Dealers will replace the relay at no cost to the owner. Owners can check their VIN to confirm whether a specific truck is affected."
+  },
+  {
+    "id": "recall-23v-145",
+    "title": "Recall 23V-145 brake booster",
+    "category": "recalls",
+    "model": "2500",
+    "model_year": 2023,
+    "keywords": ["23v-145", "recall", "brake booster", "2023"],
+    "body": "Recall 23V-145 covers 2023 Summit 2500 trucks. The brake booster may lose vacuum assist during braking. Dealers will replace the booster at no cost to the owner. Owners can check their VIN to confirm whether a specific truck is affected."
+  },
+  {
+    "id": "recall-24v-019",
+    "title": "Recall 24V-019 seat belt pretensioner",
+    "category": "recalls",
+    "model": "2500",
+    "model_year": 2024,
+    "keywords": ["24v-019", "recall", "seat belt", "pretensioner", "2024"],
+    "body": "Recall 24V-019 covers 2024 Summit 2500 trucks. The seat belt pretensioner may deploy without a crash event. Dealers will replace the pretensioner at no cost to the owner. Owners can check their VIN to confirm whether a specific truck is affected."
+  },
+  {
+    "id": "recall-22v-311",
+    "title": "Recall 22V-311 headlight wiring harness",
+    "category": "recalls",
+    "model": "1500",
+    "model_year": 2022,
+    "keywords": ["22v-311", "recall", "headlight", "harness", "2022"],
+    "body": "Recall 22V-311 covers 2022 Summit 1500 trucks. The headlight wiring harness may chafe and short against the frame. Dealers will reroute and secure the harness at no cost to the owner. Owners can check their VIN to confirm whether a specific truck is affected."
+  },
+  {
+    "id": "recall-24v-402",
+    "title": "Recall 24V-402 steering column bolt",
+    "category": "recalls",
+    "model": "1500",
+    "model_year": 2024,
+    "keywords": ["24v-402", "recall", "steering column", "bolt", "2024"],
+    "body": "Recall 24V-402 covers 2024 Summit 1500 trucks. The steering column bolt may loosen over time. Dealers will torque the bolt to specification at no cost to the owner. Owners can check their VIN to confirm whether a specific truck is affected."
+  },
+  {
+    "id": "recall-23v-256",
+    "title": "Recall 23V-256 transmission cooler line",
+    "category": "recalls",
+    "model": "1500",
+    "model_year": 2023,
+    "keywords": ["23v-256", "recall", "transmission", "cooler line", "2023"],
+    "body": "Recall 23V-256 covers 2023 Summit 1500 trucks. The transmission cooler line may leak fluid onto hot exhaust. Dealers will replace the cooler line at no cost to the owner. Owners can check their VIN to confirm whether a specific truck is affected."
+  },
+  {
+    "id": "recall-22v-078",
+    "title": "Recall 22V-078 trailer brake module",
+    "category": "recalls",
+    "model": "2500",
+    "model_year": 2022,
+    "keywords": ["22v-078", "recall", "trailer brake", "module", "2022"],
+    "body": "Recall 22V-078 covers 2022 Summit 2500 trucks. The trailer brake module may stop responding to controller input. Dealers will reflash the module at no cost to the owner. Owners can check their VIN to confirm whether a specific truck is affected."
+  },
+  {
+    "id": "recall-24v-330",
+    "title": "Recall 24V-330 rear axle seal",
+    "category": "recalls",
+    "model": "1500",
+    "model_year": 2024,
+    "keywords": ["24v-330", "recall", "axle seal", "rear axle", "2024"],
+    "body": "Recall 24V-330 covers 2024 Summit 1500 trucks. The rear axle seal may weep oil onto the brake surface. Dealers will replace the axle seal at no cost to the owner. Owners can check their VIN to confirm whether a specific truck is affected."
+  },
+  {
+    "id": "recall-23v-011",
+    "title": "Recall 23V-011 instrument cluster",
+    "category": "recalls",
+    "model": "1500",
+    "model_year": 2023,
+    "keywords": ["23v-011", "recall", "instrument cluster", "2023"],
+    "body": "Recall 23V-011 covers 2023 Summit 1500 trucks. The instrument cluster may go blank at startup. Dealers will update the cluster firmware at no cost to the owner. Owners can check their VIN to confirm whether a specific truck is affected."
+  },
+  {
+    "id": "recall-24v-155",
+    "title": "Recall 24V-155 glow plug controller",
+    "category": "recalls",
+    "model": "2500",
+    "model_year": 2024,
+    "keywords": ["24v-155", "recall", "glow plug", "controller", "2024"],
+    "body": "Recall 24V-155 covers 2024 Summit 2500 trucks. The glow plug controller may overheat during cold starts. Dealers will replace the controller at no cost to the owner. Owners can check their VIN to confirm whether a specific truck is affected."
+  },
+  {
+    "id": "oil-change-interval",
+    "title": "Oil change interval when towing",
+    "category": "maintenance",
+    "model": "1500",
+    "model_year": 2024,
+    "keywords": ["oil", "maintenance", "interval", "tow"],
+    "body": "Normal service interval is 7,500 miles. Drop to 5,000 miles if you tow regularly, idle heavily, or drive in sustained heat. The oil life monitor assumes normal duty and does not know you towed a trailer."
+  },
+  {
+    "id": "tire-pressure-towing",
+    "title": "Tire pressure when loaded or towing",
+    "category": "maintenance",
+    "model": "1500",
+    "model_year": 2024,
+    "keywords": ["tire", "pressure", "tow", "maintenance"],
+    "body": "Inflate rear tires to 45 psi when loaded near payload or towing near the rating. Underinflated rear tires are the most common cause of poor trailer stability at highway speed."
+  },
+  {
+    "id": "warranty-powertrain",
+    "title": "Powertrain warranty coverage",
+    "category": "warranty",
+    "model": "1500",
+    "model_year": 2024,
+    "keywords": ["warranty", "powertrain", "coverage"],
+    "body": "Powertrain coverage runs 5 years or 60,000 miles. Towing above the published rating for your model year and configuration can be grounds for denying a driveline claim."
+  }
+]

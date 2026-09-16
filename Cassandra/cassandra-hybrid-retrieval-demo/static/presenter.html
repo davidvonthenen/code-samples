@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Cassandra Hybrid Retrieval</title>
+  <style>
+    :root {
+      --bg: #f4f2ed;
+      --ink: #1c1b19;
+      --muted: #5c574f;
+      --line: #d6d0c4;
+      --panel: #fffdf8;
+      --keyword: #0f5c4c;
+      --vector: #8a3b12;
+      --hybrid: #1e3a6e;
+      --warn: #7a2e2e;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      color: var(--ink);
+      background: var(--bg);
+      font-family: "IBM Plex Sans", "Segoe UI", sans-serif;
+    }
+    main { max-width: 1200px; margin: 0 auto; padding: 32px 20px 48px; }
+    h1 { margin: 0 0 6px; font-size: 1.9rem; }
+    .sub { color: var(--muted); line-height: 1.5; margin: 0 0 22px; max-width: 60rem; }
+    .presets { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 14px; }
+    button {
+      border: 1px solid var(--line);
+      border-radius: 4px;
+      padding: 9px 12px;
+      background: var(--panel);
+      color: var(--ink);
+      cursor: pointer;
+      font: inherit;
+    }
+    button.active { border-color: var(--hybrid); color: var(--hybrid); }
+    .query-row { display: grid; grid-template-columns: 1fr auto; gap: 10px; }
+    input, select {
+      border: 1px solid var(--line);
+      border-radius: 4px;
+      padding: 12px 14px;
+      background: var(--panel);
+      color: var(--ink);
+      font: inherit;
+    }
+    input { width: 100%; }
+    select { padding: 8px 10px; }
+    .run { background: var(--hybrid); border-color: var(--hybrid); color: white; }
+    .context {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin: 12px 0;
+      padding: 10px 12px;
+      border: 1px solid var(--line);
+      border-radius: 4px;
+      background: var(--panel);
+      font-size: 0.9rem;
+    }
+    .context label { display: grid; gap: 4px; color: var(--muted); font-size: 0.78rem; }
+    .context .note { color: var(--muted); font-size: 0.82rem; }
+    .status { min-height: 1.4em; margin: 12px 0; color: var(--muted); font-size: 0.9rem; }
+    .columns { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+    .col {
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background: var(--panel);
+      min-height: 260px;
+    }
+    .col header {
+      padding: 13px 15px;
+      border-bottom: 1px solid var(--line);
+      font-weight: 600;
+      font-size: 0.95rem;
+    }
+    .col.keyword header { color: var(--keyword); }
+    .col.vector header { color: var(--vector); }
+    .col.hybrid header { color: var(--hybrid); }
+    .hint { display: block; color: var(--muted); font-size: 0.78rem; font-weight: 400; margin-top: 2px; }
+    .hits { padding: 8px; }
+    .hit { padding: 11px; border-bottom: 1px solid var(--line); }
+    .hit:last-child { border-bottom: 0; }
+    .rank { color: var(--muted); font-size: 0.76rem; }
+    .title { margin: 3px 0; font-weight: 600; font-size: 0.92rem; }
+    .vehicle, .snippet { color: var(--muted); font-size: 0.8rem; line-height: 1.4; }
+    .flag { margin-top: 6px; font-size: 0.75rem; font-weight: 600; }
+    .flag.yes { color: var(--keyword); }
+    .flag.no { color: var(--warn); }
+    .empty { padding: 16px 12px; color: var(--muted); font-size: 0.9rem; }
+    details {
+      margin-top: 16px;
+      padding: 12px 14px;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background: var(--panel);
+    }
+    summary { cursor: pointer; font-weight: 600; color: var(--hybrid); }
+    pre {
+      margin: 10px 0 0;
+      padding: 12px;
+      background: #1c1b19;
+      color: #f4f2ed;
+      border-radius: 4px;
+      overflow-x: auto;
+      font-size: 0.82rem;
+      line-height: 1.45;
+    }
+    .error {
+      margin: 12px 0;
+      padding: 10px 12px;
+      border: 1px solid var(--warn);
+      border-radius: 4px;
+      color: var(--warn);
+    }
+    @media (max-width: 960px) {
+      .columns { grid-template-columns: 1fr; }
+      .query-row { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>Lexical and semantic retrieval on one table</h1>
+    <p class="sub">
+      Same question, three paths against one Cassandra 5 table: native CQL that
+      filters and vector-orders in a single statement, alongside the SAI keyword
+      matching and vector ANN lanes it combines. Retrieval only — this app does
+      not call a language model.
+      <strong>You own a 2024 Summit 1500</strong>, so watch which chunks are
+      actually about your truck.
+    </p>
+
+    <div class="presets" id="presets"></div>
+    <div class="query-row">
+      <input id="query" type="text" placeholder="Ask a question…" />
+      <button class="run" id="run">Run all lanes</button>
+    </div>
+
+    <div class="context">
+      <strong>Known customer context</strong>
+      <label>Model <select id="model"></select></label>
+      <label>Model year <select id="model-year"></select></label>
+      <span class="note">Applied to the hybrid lane only.</span>
+    </div>
+
+    <div class="status" id="status"></div>
+    <div id="error"></div>
+
+    <div class="columns">
+      <section class="col hybrid">
+        <header>
+          Hybrid
+          <span class="hint">SAI filters + ANN ordering · one CQL statement</span>
+        </header>
+        <div class="hits" id="hybrid-hits">
+          <div class="empty">Choose a preset or enter a question.</div>
+        </div>
+      </section>
+      <section class="col keyword">
+        <header>
+          Keyword (SAI)
+          <span class="hint">keywords CONTAINS · ranked by token overlap in the app</span>
+        </header>
+        <div class="hits" id="keyword-hits">
+          <div class="empty">Choose a preset or enter a question.</div>
+        </div>
+      </section>
+      <section class="col vector">
+        <header>
+          Vector ANN
+          <span class="hint">ORDER BY embedding ANN OF · cosine similarity</span>
+        </header>
+        <div class="hits" id="vector-hits">
+          <div class="empty">Choose a preset or enter a question.</div>
+        </div>
+      </section>
+    </div>
+
+    <details id="hybrid">
+      <summary>The CQL statement the hybrid lane runs</summary>
+      <p class="status" id="hybrid-status">Run a query to see the statement it executes.</p>
+      <pre id="hybrid-cql">-- no filters inferred yet</pre>
+    </details>
+  </main>
+
+  <script>
+    // Fallback flag token: the model year the customer owns. When a question
+    // carries an identifier, the identifier is the thing worth checking, so
+    // runQuery swaps this for the selective token instead.
+    let defaultFlagToken = "2024";
+    let flagToken = defaultFlagToken;
+
+    function escapeHtml(value) {
+      return String(value)
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;");
+    }
+
+    function snippet(body) {
+      const clean = String(body || "").replace(/\s+/g, " ").trim();
+      return clean.length > 180 ? clean.slice(0, 177) + "…" : clean;
+    }
+
+    function notes(hit) {
+      const parts = [];
+      if (hit.score != null) {
+        parts.push(`cosine ${hit.score.toFixed(4)}`);
+      }
+      if (hit.matched != null) {
+        parts.push(`matched ${hit.matched} token${hit.matched === 1 ? "" : "s"}`);
+      }
+      return parts.length ? ` · ${parts.join(" · ")}` : "";
+    }
+
+    function renderHits(elementId, hits, emptyMessage) {
+      const box = document.getElementById(elementId);
+      if (!hits || !hits.length) {
+        box.innerHTML = `<div class="empty">${escapeHtml(emptyMessage)}</div>`;
+        return;
+      }
+      box.innerHTML = hits.map((hit, index) => {
+        const text = `${hit.title || ""} ${hit.body || ""}`.toLowerCase();
+        const mentions = text.includes(flagToken.toLowerCase());
+        return `
+        <article class="hit">
+          <div class="rank">${index + 1}. [${escapeHtml(hit.category)}] ${escapeHtml(hit.id)}${escapeHtml(notes(hit))}</div>
+          <div class="title">${escapeHtml(hit.title)}</div>
+          <div class="vehicle">model ${escapeHtml(hit.model || "general")}
+            · year ${escapeHtml(hit.model_year || "general")}</div>
+          <div class="snippet">${escapeHtml(snippet(hit.body))}</div>
+          <div class="flag ${mentions ? "yes" : "no"}">
+            ${mentions ? "mentions" : "does not mention"} ${escapeHtml(flagToken)}
+          </div>
+        </article>`;
+      }).join("");
+    }
+
+    function requestPayload() {
+      const model = document.getElementById("model").value;
+      const year = document.getElementById("model-year").value;
+      return {
+        query: document.getElementById("query").value.trim(),
+        limit: 5,
+        model: model || null,
+        model_year: year ? Number(year) : null,
+      };
+    }
+
+    async function runQuery() {
+      const payload = requestPayload();
+      if (!payload.query) return;
+      const button = document.getElementById("run");
+      const error = document.getElementById("error");
+      error.innerHTML = "";
+      button.disabled = true;
+      document.getElementById("status").textContent = "Running three lanes…";
+      try {
+        const response = await fetch("/api/query", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload),
+        });
+        const data = await response.json();
+        if (!response.ok) throw new Error(data.detail || "Query failed");
+
+        flagToken = data.keyword || defaultFlagToken;
+        renderHits("hybrid-hits", data.filtered_hits, "No filters inferred, so this lane was skipped.");
+        renderHits("keyword-hits", data.keyword_hits, "No document contains these tokens.");
+        renderHits("vector-hits", data.vector_hits, "No neighbors returned.");
+
+        document.getElementById("status").textContent =
+          `Exact tokens: ${(data.tokens || []).join(", ") || "(none detected)"}` +
+          ` · selective token: ${data.keyword || "(none)"}` +
+          ` · inferred category: ${data.category || "(none)"}` +
+          " · no LLM call";
+
+        document.getElementById("hybrid-cql").textContent =
+          data.filtered_cql || "-- no filters inferred for this question";
+        document.getElementById("hybrid-status").textContent = data.filtered_cql
+          ? `Customer context applied: model ${data.model || "any"} · year ${data.model_year || "any"}`
+          : "Nothing in this question is selective enough to filter on.";
+      } catch (err) {
+        error.innerHTML = `<div class="error">${escapeHtml(err.message)}</div>`;
+        document.getElementById("status").textContent = "";
+      } finally {
+        button.disabled = false;
+      }
+    }
+
+    function fillSelect(elementId, values, anyLabel) {
+      const select = document.getElementById(elementId);
+      select.innerHTML =
+        `<option value="">${escapeHtml(anyLabel)}</option>` +
+        values.map((value) => `<option value="${escapeHtml(value)}">${escapeHtml(value)}</option>`).join("");
+    }
+
+    async function loadPresets() {
+      const response = await fetch("/api/presets");
+      const data = await response.json();
+      if (data.highlight_token) {
+        defaultFlagToken = data.highlight_token;
+        flagToken = data.highlight_token;
+      }
+      fillSelect("model", data.models || [], "any model");
+      fillSelect("model-year", data.model_years || [], "any year");
+
+      const box = document.getElementById("presets");
+      box.innerHTML = "";
+      (data.queries || []).forEach((query) => {
+        const button = document.createElement("button");
+        button.type = "button";
+        button.textContent = query;
+        button.addEventListener("click", () => {
+          document.querySelectorAll("#presets button").forEach((other) => other.classList.remove("active"));
+          button.classList.add("active");
+          document.getElementById("query").value = query;
+          runQuery();
+        });
+        box.appendChild(button);
+      });
+    }
+
+    document.getElementById("run").addEventListener("click", runQuery);
+    document.getElementById("query").addEventListener("keydown", (event) => {
+      if (event.key === "Enter") runQuery();
+    });
+    document.getElementById("model").addEventListener("change", runQuery);
+    document.getElementById("model-year").addEventListener("change", runQuery);
+    loadPresets().catch((error) => {
+      document.getElementById("error").innerHTML =
+        `<div class="error">Could not load presets: ${escapeHtml(error.message)}</div>`;
+    });
+  </script>
+</body>
+</html>
