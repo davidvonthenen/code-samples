@@ -15,6 +15,10 @@ services:
         -Djava.net.preferIPv4Stack=true
     volumes:
       - cassandra_hybrid_data:/var/lib/cassandra
+    # Cassandra needs longer than Docker's 10s default to flush memtables on
+    # shutdown; a hard kill leaves vector rows in the commit log, and replaying
+    # them through the SAI index fails to start the node.
+    stop_grace_period: 60s
     healthcheck:
       test: ["CMD-SHELL", "cqlsh -e 'SELECT now() FROM system.local' || exit 1"]
       interval: 10s

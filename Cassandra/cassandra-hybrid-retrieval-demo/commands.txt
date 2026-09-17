@@ -1,0 +1,8 @@
+python src/demo.py
+python src/demo.py "What is recall 24V-330?"
+python src/demo.py "Is there a recall on the tailgate?"
+python src/demo.py "How much can the Summit 1500 tow?"
+python src/demo.py --model 1500 --model-year 2024 "How much can the Summit 1500 tow?"
+python src/evaluate.py
+
+docker exec cassandra-hybrid-retrieval-demo nodetool flush
