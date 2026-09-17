@@ -1,0 +1,15 @@
+.env
+__pycache__/
+*.pyc
+.venv/
+.DS_Store
+data/
+*.gguf
+*.jsonl
+.pytest_cache/
+.cache/
+# Full corpus is ~39k recipes downloaded by download_dataset.py
+recipes/recipes_full.json
+# Preprod measurements and unfiled bug findings -- local working notes
+NOTES-preprod.md
+
